@@ -1,0 +1,22 @@
+{% extends "orders/base.html" %}
+{% block content %}
+	{% for order in orders %}
+		<article class="media content-section">
+      <img class="rounded-circle article-img" src="{{ order.author.profile.image.url }}">
+  <div class="media-body">
+    <div class="article-metadata">
+      {% if order.author == user %}
+      <a class="mr-2" href="{% url 'profile' %}">{{ order.author }}</a>
+      {% else %}
+      <a class="mr-2">{{ order.author }}</a>
+      {% endif %}
+      <small class="text-muted">{{ order.date_posted|date:"F d, Y" }}</small>
+    </div>
+    <h2><a class="article-title" href="{% url 'order-detail' order.id %}">{{ order.title }}</a></h2>
+    <p class="article-title">{{ order.category }}</p>
+    <p class="article-content">{{ order.description }}</p>
+    <img class="article-img" src="{{ order.image.url }}">
+  </div>
+</article>
+	{% endfor %}
+{% endblock content %}

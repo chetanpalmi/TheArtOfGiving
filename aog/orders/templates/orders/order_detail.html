@@ -1,0 +1,36 @@
+{% extends "orders/base.html" %}
+{% block content %}
+		<article class="media content-section">
+      <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}">
+  <div class="media-body">
+    <div class="article-metadata">
+      {% if order.author == user %}
+      <a class="mr-2" href="{% url 'profile' %}">{{ order.author }}</a>
+      {% else %}
+      <a class="mr-2">{{ order.author }}</a>
+      {% endif %}
+      <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
+      {% if object.author == user or user.is_superuser %}
+      <div>
+      <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'order-update' object.id%}">Update</a>
+      <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'order-delete' object.id%}">Delete</a>
+    </div>
+      {% endif %}
+    </div>
+    <h2 class="article-title">{{ object.title }}
+    </h2>s
+    <p class="article-title">{{ order.category }}</p>
+    <p class="article-content">{{ order.description }}</p>
+    <img class="article-img" src="{{ order.image.url }}">
+    {% if user.is_superuser %}
+    <hr style="height:2px;border-width:0;color:gray;background-color:orange">
+    <h5>Doner Details</h5>
+    <p class="article-content">{{ object.author.username }}</p>
+    <p class="article-content">{{ object.author.email }}</p>
+    <p class="article-content">{{ object.author.profile.mobile }}</p>
+    <p class="article-content">{{ object.author.profile.hostel }}</p>
+    <p class="article-content">{{ object.author.profile.room }}</p>
+    {% endif %}
+  </div>
+</article>
+{% endblock content %}
